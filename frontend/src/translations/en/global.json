@@ -1,0 +1,12 @@
+{
+    "components": {
+        "login": {
+            "h1": "Welcome to your Clients Dashboard",
+            "error": "Invalid email or password",
+            "remember_me": "Remember me",
+            "login": "Log-in",
+            "i1": "Email",
+            "i2": "Password"
+        }
+    }
+}

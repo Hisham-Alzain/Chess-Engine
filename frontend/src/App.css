@@ -1,0 +1,29 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* OUR CSS */
+/* Custom Themes */
+body {
+  --color-background: #212121;
+  --color-custom_grey: #424242;
+  --color-custom_red: #B71C1C;
+  --color-text: #fdf8f8;
+
+  color: var(--color-text);
+  background: var(--color-background);
+}

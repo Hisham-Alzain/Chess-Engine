@@ -1,0 +1,45 @@
+.loading_screen {
+  width: 100%;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading_bars {
+  width: 50px;
+  min-height: 100px;
+  aspect-ratio: .75;
+  --c: no-repeat linear-gradient(#B71C1C 0 0);
+  background:
+    var(--c) 0% 50%,
+    var(--c) 50% 50%,
+    var(--c) 100% 50%;
+  animation: l7 1s infinite linear alternate;
+}
+
+@keyframes l7 {
+  0% {
+    background-size: 20% 50%, 20% 50%, 20% 50%
+  }
+
+  20% {
+    background-size: 20% 20%, 20% 50%, 20% 50%
+  }
+
+  40% {
+    background-size: 20% 100%, 20% 20%, 20% 50%
+  }
+
+  60% {
+    background-size: 20% 50%, 20% 100%, 20% 20%
+  }
+
+  80% {
+    background-size: 20% 50%, 20% 50%, 20% 100%
+  }
+
+  100% {
+    background-size: 20% 50%, 20% 50%, 20% 50%
+  }
+}

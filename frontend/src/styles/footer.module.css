@@ -1,0 +1,45 @@
+.footer .top {
+    padding-block-start: 30px;
+}
+
+.footer .top .row .social {
+    text-align: center;
+    margin-block-end: 15px;
+    margin-block-start: 30px;
+}
+
+.footer .top .row .social a {
+    width: 45px;
+    height: 45px;
+    font-size: 25px;
+    color: #ff0000;
+    background: #ff00001a;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 50px;
+    display: inline-block;
+    margin-inline-end: 10px;
+}
+
+.footer .top .row .social a:hover {
+    color: #ffffff;
+    background: #ff0000;
+    transition: 0.1s;
+}
+
+.footer .bottom {
+    border-block-start: 3px solid #333333;
+    padding-block-start: 15px;
+    padding-block-end: 30px;
+    margin-inline: 90px;
+}
+
+.footer .bottom .row .copy_right {
+    font-size: 15px;
+    font-weight: 300;
+    color: #c4c4c4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-block-end: 15px;
+}

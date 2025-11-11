@@ -1,0 +1,132 @@
+.page {
+  width: 100%;
+  height: 99vh;
+  position: relative;
+}
+
+.banner {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+}
+
+.column {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-block-start: 100px;
+  padding-block-start: 50px;
+}
+
+.left_content {
+  width: 100%;
+}
+
+.left_content h1 {
+  font-family: sans-serif;
+  font-size: 50px;
+  font-weight: 500;
+  color: #F3EEEBFF;
+  text-align: center;
+  padding-inline: 25px;
+}
+
+.right_content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login_form {
+  width: 40%;
+  padding-block: 30px;
+  padding-inline: 50px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  z-index: 1;
+}
+
+.login_form h1 {
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  color: #F3EEEBFF;
+  padding-inline: 15px;
+}
+
+.login_form p {
+  color: #ffffff;
+  text-shadow: 1px 1px #ff0000;
+  padding: 1px 5px;
+  transition: 0.5s;
+}
+
+.input_field,
+.button_container {
+  margin-block: 20px;
+}
+
+.input_field input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.login_button {
+  width: 160px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  color: #fffefe;
+  background-color: #d41111;
+}
+
+.login_button:hover {
+  background-color: #201d1c;
+}
+
+/* Existing CSS styles remain the same */
+@media only screen and (max-width: 970px) {
+  .row {
+    flex-direction: column;
+    /* Display the right section on top */
+  }
+
+  .column {
+    width: 100%;
+    margin-block-start: 10px;
+    padding-block-start: 5px;
+    /* Make each column take up the full width */
+  }
+
+  .left_content h1 {
+    padding-inline: 100px;
+    padding-block-start: 10px;
+  }
+}
+
+@media only screen and (max-width: 485px) {
+  .left_content h1 {
+    font-size: 35px;
+  }
+}

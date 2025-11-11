@@ -1,0 +1,82 @@
+.info_button {
+    color: #ffffff;
+    background: #ffc107;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 10px 10px;
+    margin-inline: 3px;
+    transition: background-color 0.3s;
+}
+
+.info_button:hover {
+    background: #e0a800;
+}
+
+.modal {
+    background: var(--color-background);
+    box-shadow: 0 0 15px var(--color-custom_red);
+}
+
+.modal .header {
+    width: 100%;
+    font-size: 25px;
+    text-align: center;
+    border-block-end: 1px solid gray;
+    margin-block-end: 5px;
+    padding-block: 10px;
+}
+
+.modal .close {
+    position: absolute;
+    display: block;
+    top: -10px;
+    right: -10px;
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 20px;
+    color: var(--color-text);
+    background: var(--color-custom_red);
+    border: 2px solid #cfcece;
+    border-radius: 18px;
+    padding: 2px 5px;
+}
+
+.modal .actions {
+    width: 100%;
+    text-align: center;
+    padding: 10px 5px;
+    margin: auto;
+}
+
+.modal .content {
+    padding: 10px 5px;
+}
+
+/* Table Styles */
+.table {
+    width: 100%;
+    position: relative;
+    border-collapse: collapse;
+    margin-block-start: 20px;
+}
+
+.table th,
+.table td {
+    width: 50%;
+    padding: 6px 8px;
+    text-align: start;
+    border: 1px solid #ddd;
+    color: var(--color-text);
+    background-color: var(--color-custom_grey);
+}
+
+.table tr:hover {
+    background-color: var(--color-custom_red);
+}
+
+@media screen and (max-width: 970px) {
+    .info_button {
+        margin-block: 2px;
+    }
+}
