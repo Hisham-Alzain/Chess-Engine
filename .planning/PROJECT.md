@@ -42,8 +42,11 @@ learning loop is a hope rather than a measured fact, the project has failed.
 - [ ] Uploaded PGN games are ingested as training examples (no visual replay; ingestion only)
 - [ ] Self-play runs on demand: the user starts a session with a target game count, watches progress,
       and it stops when done
-- [ ] Training runs in batches once the pool has enough games, and can be triggered manually
-      ("train now")
+- [ ] Training runs in batches: reaching the pool threshold flips a "Ready to train" state and the user
+      presses "train now"; an auto-train toggle exists but defaults to off (resolves the tension with
+      "never always-on", decided 2026-10-12)
+- [ ] All automated games (gating, self-play, rating) use fixed node counts for reproducibility, and
+      each promotion additionally requires one fixed-time confirmation match
 - [ ] Gating: a newly trained candidate plays a promotion match against the current network and
       replaces it only if it wins by a statistically meaningful margin
 - [ ] The user can see the training history: pools, runs, candidates, promotion results
@@ -51,7 +54,10 @@ learning loop is a hope rather than a measured fact, the project has failed.
 **Rating**
 - [ ] Elo is measured by matches against Stockfish at capped strength levels, computed from results
 - [ ] A dashboard shows the current rating and its history over network versions
-- [ ] v1 is done when the dashboard shows a rating that has gone up at least once because of training
+- [ ] v1 is done when a promoted net's rating exceeds the previous net's with non-overlapping 95%
+      confidence intervals, confirmed by an independent re-measurement on held-out openings under the
+      same protocol version (tightened 2026-10-12 after research: a bare "went up once" is satisfied
+      by noise alone given enough candidates)
 
 ### Out of Scope
 
@@ -72,6 +78,10 @@ learning loop is a hope rather than a measured fact, the project has failed.
   of the v1 path, but the code is structured so accounts can be added without rework
 - **Online rating via a Lichess bot** — v2; Stockfish levels are the only yardstick in v1
 - **Always-on idle self-play** — rejected for v1; laptop fan and battery. On-demand only
+- **Takeback / undo during a game** — v2; when added, games using it are flagged and excluded from
+  the training pool by default
+- **Numeric strength promises** — removed 2026-10-12; no reliable Elo-vs-data curve exists, so the
+  phase 2 classical baseline and phase 5 bootstrap rating replace any guess
 - **Pure Python search** — rejected; roughly 1000x slower than compiled, caps Elo far too low
 
 ## Context
@@ -112,8 +122,13 @@ and rules out the largest Leela-size nets.
   reinforcement. Both feed the same net through two pipelines.
 - Stockfish does not train its nets on game results but on deep-search scores of billions of
   positions. A small, result-labelled dataset fine-tuned onto such a net regresses it.
-- The Lichess open database (billions of games, many with Stockfish evaluations, permissive license)
-  is the realistic bootstrap source: a day or two on the 3060 should reach a 2000 to 2500 evaluation.
+- The Lichess evaluation database (416 million Stockfish-scored positions, CC0, 22 GB compressed) is
+  the bootstrap source; a streamed subset is used because drive D: has about 20 GB free. Expected
+  strength after bootstrap is deliberately not stated; it is measured in phases 2 and 5.
+- Research (2026-10-12, five dimensions, `.planning/research/`) converged on: build the engine with a
+  classical eval and the measurement harness first, calibrate the gate (same-net must not promote,
+  doubled-nodes must be detected), then the net with a bit-exact C++/PyTorch parity test, then
+  bootstrap training, then the self-play and gating loop; the play UI runs in parallel with net work.
 - Gating (promotion match before adoption) is how Leela avoids silent regressions.
 
 **User's understanding.** The user is new to engine internals and asked for every concept to be
@@ -153,6 +168,13 @@ plans must keep explaining in plain terms and must not assume engine or ML vocab
 | Self-play is on-demand with a target game count | Laptop thermals and battery; predictable load | ✓ Settled |
 | Accounts, clocks, adjustable strength, Lichess bot are v2 | Keep v1 focused on proving the learning loop | ✓ Settled |
 | Design for public product while running locally | User's stated end goal; avoids rework on data models and API boundaries | — Pending |
+| Done criterion is statistical (non-overlapping 95% CIs plus independent re-measurement) | Four of five research files found "went up once" is satisfied by noise | ✓ Settled |
+| "Ready to train" state plus manual button; auto-train toggle default off | Resolves "batches when ready" vs "never always-on" | ✓ Settled |
+| Fixed nodes for all automated games plus one fixed-time confirmation per promotion | Reproducible under thermal throttling; timed check catches nets that are stronger per node but slower per second | ✓ Settled |
+| No takeback in v1 | Keeps the play loop and pool honest; add later with exclude-from-pool flag | ✓ Settled |
+| FastAPI replaces Flask; SQLite WAL now, Postgres-portable; DB-backed job worker, no Celery/Redis | Native SSE, no Windows-hostile broker, one laptop | — Pending |
+| fastchess for matches, Stockfish sf_19 pinned as yardstick, both as separate executables only | MIT and GPL respectively; keeps our code license-clean | — Pending |
+| react-chessboard + chess.js, not Chessground | Chessground is GPL in the browser bundle | — Pending |
 
 ## Evolution
 
@@ -172,4 +194,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-10-12 after initialization*
+*Last updated: 2026-10-12 after research and requirements definition*
